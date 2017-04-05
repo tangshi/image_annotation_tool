@@ -9,6 +9,7 @@
 #include <QMessageBox>
 #include <QDebug>
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -35,7 +36,7 @@ void MainWindow::loadImageDir()
     QFile file(filepath);
     if (file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        QRegularExpression re("^(\\S+)\\s+\\d+\\s+\\d+\\s+\\d+\\s+\\d+");
+        QRegularExpression re("^(\\S+)\\s1(\\s\\d+){4}$");
 
         QTextStream in(&file);
         in.setCodec("UTF-8");
@@ -74,7 +75,6 @@ void MainWindow::loadImageDir()
         mImageView->loadImage(dir.filePath(mImageNames.top()));
     }
 }
-
 
 void MainWindow::save()
 {
@@ -119,11 +119,11 @@ void MainWindow::save()
         {
             QTextStream in(&file);
             in.setCodec("UTF-8");
-            in << mImageNames.pop() << ' '
+            in << mImageNames.pop() << " 1 "
                << QString::number(rect.x()) << ' '
                << QString::number(rect.y()) << ' '
-               << QString::number(rect.width()) << ' '
-               << QString::number(rect.height()) << '\n';
+               << QString::number(rect.x() + rect.width()) << ' '
+               << QString::number(rect.y() + rect.height()) << '\n';
 
             in.flush();
             file.close();
