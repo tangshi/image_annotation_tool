@@ -4,7 +4,7 @@
 #include <QPainter>
 #include <QPixmap>
 #include <QDebug>
-#include <QFile>
+#include <QImageReader>
 
 using namespace Qt;
 
@@ -25,15 +25,16 @@ ImageView::ImageView(QWidget *parent) : QLabel(parent)
 
 void ImageView::loadImage(QString imagePath)
 {
-    QFile file(imagePath);
-    if (! file.open(QIODevice::ReadOnly)) {
+    QImageReader reader(imagePath);
+    reader.setAutoTransform(true);
+    const QImage image = reader.read();
+
+    if (image.isNull())
+    {
         return;
     }
 
-    auto content = file.readAll();
-
-    QPixmap pixmap;
-    pixmap.loadFromData(content);
+    QPixmap pixmap = QPixmap::fromImage(image);
 
     if (pixmap.isNull())
     {
