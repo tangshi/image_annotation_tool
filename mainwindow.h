@@ -4,12 +4,15 @@
 #include <QMainWindow>
 #include <QStack>
 #include <QDir>
+#include "annotationdata.h"
 
 namespace Ui {
 class MainWindow;
 }
 
 class ImageView;
+class QLabel;
+class LabelValidator;
 
 class MainWindow : public QMainWindow
 {
@@ -21,14 +24,14 @@ public:
 
 private slots:
     void loadImageDir();
-    void save();
+    void next();
+    void reset();
 
 private:
     Ui::MainWindow *ui;
-    ImageView *mImageView;
-    QDir mImageDir;
-    QStack<QString> mImageNames;
-    int mNumberOfImages;
+    AnnotationDataElement currentElem;
+    AnnotationData annotationData;
+    LabelValidator *labelValidator;
 };
 
 #endif // MAINWINDOW_H

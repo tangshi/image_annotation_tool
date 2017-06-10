@@ -4,7 +4,6 @@
 #include <QPainter>
 #include <QPixmap>
 #include <QDebug>
-#include <QFile>
 
 using namespace Qt;
 
@@ -20,7 +19,7 @@ ImageView::ImageView(QWidget *parent) : QLabel(parent)
     setMouseTracking(false);
     setScaledContents(true);
 
-    setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
 }
 
 void ImageView::loadImage(QString imagePath)
@@ -43,6 +42,8 @@ void ImageView::loadImage(QString imagePath)
     {
         setPixmap(pixmap);
 
+        emit imageLoaded(pixmap);
+
         mRect = QRect();
         mLeftTop = QPoint();
         mHasLoaded = true;
@@ -64,8 +65,14 @@ void ImageView::mouseMoveEvent(QMouseEvent *event)
     if (mHasLoaded)
     {
         mRect.setCoords(mLeftTop.x(), mLeftTop.y(), event->pos().x(), event->pos().y());
-        qDebug() << "rect: " << mRect << getRect();
         repaint();
+    }
+}
+
+void ImageView::mouseReleaseEvent(QMouseEvent *)
+{
+    if (mHasLoaded && mRect.x() == mLeftTop.x() && mRect.y() == mLeftTop.y()) {
+        emit this->mouseReleased();
     }
 }
 
@@ -98,4 +105,22 @@ const QRect ImageView::getRect() const
     int h = static_cast<int>(hRatio * pixmapRect.height());
 
     return QRect(x, y, w, h);
+}
+
+const QRectF ImageView::getNormalizedRect() const
+{
+    const QRect widgetRect = rect();
+
+    double x = static_cast<double>(mRect.x()) / widgetRect.width();
+    double y = static_cast<double>(mRect.y()) / widgetRect.height();
+    double w = static_cast<double>(mRect.width()) / widgetRect.width();
+    double h = static_cast<double>(mRect.height()) / widgetRect.height();
+
+    return QRectF(x, y, w, h);
+}
+
+void ImageView::clearRect()
+{
+    mRect = QRect();
+    repaint();
 }

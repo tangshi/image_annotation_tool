@@ -3,9 +3,11 @@
 
 #include <QLabel>
 #include <QRect>
+#include <QRectF>
 
 class QMouseEvent;
 class QPaintEvent;
+class QPixmap;
 
 class ImageView : public QLabel
 {
@@ -16,10 +18,17 @@ public:
 
     void loadImage(QString imagePath);
     const QRect getRect() const;
+    const QRectF getNormalizedRect() const;
+    void clearRect();
+
+signals:
+    void mouseReleased();
+    void imageLoaded(QPixmap);
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
 
 private:

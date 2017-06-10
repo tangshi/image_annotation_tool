@@ -6,7 +6,7 @@
 
 QT += core gui widgets
 
-TARGET = yanma_rect_annotation_tool
+TARGET = yanma_code_annotation_tool
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -24,10 +24,16 @@ CONFIG += c++11
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    imageview.cpp
+    imageview.cpp \
+    previewimageview.cpp \
+    annotationdata.cpp \
+    labelvalidator.cpp
 
 HEADERS  += mainwindow.h \
-    imageview.h
+    imageview.h \
+    previewimageview.h \
+    annotationdata.h \
+    labelvalidator.h
 
 FORMS    += mainwindow.ui
 
