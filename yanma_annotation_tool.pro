@@ -6,7 +6,7 @@
 
 QT += core gui widgets
 
-TARGET = image_mark_tool
+TARGET = yanma_rect_annotation_tool
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
