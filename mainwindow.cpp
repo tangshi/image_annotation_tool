@@ -30,16 +30,18 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->previewImage->setMaximumHeight(screenHeight / 3);
     ui->imageView->setMaximumHeight(screenHeight / 3);
 
-    for (int i = 0; i < 16; ++i)
+    for (int i = 0; i < 32; ++i)
     {
         auto lineEdit = new QLineEdit(this);
         lineEdit->setObjectName(QString("Label_") + QString::number(i));
-        lineEdit->setMinimumWidth(10);
+        lineEdit->setMinimumWidth(30);
         lineEdit->setAlignment(Qt::AlignCenter);
         lineEdit->setEnabled(false);
         lineEdit->setMaxLength(1);
         lineEdit->setValidator(labelValidator);
-        ui->labelsLayout->addWidget(lineEdit);
+        int row = i / 16;
+        int col = i > 15 ? i - 16 : i;
+        ui->labelsLayout->addWidget(lineEdit, row, col, Qt::AlignCenter);
 
         connect(lineEdit, &QLineEdit::editingFinished, this, [this]()
         {
@@ -84,7 +86,7 @@ MainWindow::MainWindow(QWidget *parent) :
         QString label = QInputDialog::getItem(this, QStringLiteral("标注"), QStringLiteral("请选择对应标注："), kLabels, 0, false, &ok);
         if (ok && !label.isEmpty())
         {
-            if (currentElem.bboxArr.size() < 16)
+            if (currentElem.bboxArr.size() < 32)
             {
                 qDebug() << "selected label: " << label;
                 int label_index = currentElem.bboxArr.size();
@@ -98,7 +100,7 @@ MainWindow::MainWindow(QWidget *parent) :
             }
             else
             {
-                QMessageBox::warning(this, QStringLiteral("提示"), QStringLiteral("标注数目已超过16个！"), QMessageBox::Ok);
+                QMessageBox::warning(this, QStringLiteral("提示"), QStringLiteral("标注数目已超过32个！"), QMessageBox::Ok);
             }
         }
 

@@ -26,7 +26,7 @@
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="labelsLayout"/>
+     <layout class="QGridLayout" name="labelsLayout"/>
     </item>
     <item>
      <widget class="ImageView" name="imageView">
