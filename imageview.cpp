@@ -64,7 +64,12 @@ void ImageView::mouseMoveEvent(QMouseEvent *event)
 {
     if (mHasLoaded)
     {
-        mRect.setCoords(mLeftTop.x(), mLeftTop.y(), event->pos().x(), event->pos().y());
+        QPoint pos = event->pos();
+        int x1 = std::min(mLeftTop.x(), pos.x());
+        int x2 = std::max(mLeftTop.x(), pos.x());
+        int y1 = std::min(mLeftTop.y(), pos.y());
+        int y2 = std::max(mLeftTop.y(), pos.y());
+        mRect.setCoords(x1, y1, x2, y2);
         qDebug() << "rect: " << mRect << getRect();
         repaint();
     }
