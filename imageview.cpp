@@ -66,14 +66,21 @@ void ImageView::mouseMoveEvent(QMouseEvent *event)
 {
     if (mHasLoaded)
     {
-        mRect.setCoords(mLeftTop.x(), mLeftTop.y(), event->pos().x(), event->pos().y());
+        QPoint pos = event->pos();
+        int x1 = std::min(pos.x(), mLeftTop.x());
+        int x2 = std::max(pos.x(), mLeftTop.x());
+        int y1 = std::min(pos.y(), mLeftTop.y());
+        int y2 = std::max(pos.y(), mLeftTop.y());
+
+        mRect.setCoords(x1, y1, x2, y2);
+
         repaint();
     }
 }
 
 void ImageView::mouseReleaseEvent(QMouseEvent *)
 {
-    if (mHasLoaded && mRect.x() == mLeftTop.x() && mRect.y() == mLeftTop.y()) {
+    if (mHasLoaded && !mRect.isEmpty()) {
         emit this->mouseReleased();
     }
 }
