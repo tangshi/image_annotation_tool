@@ -36,7 +36,7 @@ void MainWindow::loadImageDir()
     QFile file(filepath);
     if (file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        QRegularExpression re("^(\\S+)\\s1(\\s\\d+){4}$");
+        QRegularExpression re("^(.+)\\s1(\\s\\d+){4}$");
 
         QTextStream in(&file);
         in.setCodec("UTF-8");
@@ -72,7 +72,9 @@ void MainWindow::loadImageDir()
         mNumberOfImages = mImageNames.size();
         ui->progressBar->setRange(0, mNumberOfImages);
         ui->progressBar->setValue(1);
-        mImageView->loadImage(dir.filePath(mImageNames.top()));
+        QString image_name = mImageNames.top();
+        mImageView->loadImage(dir.filePath(image_name));
+        statusBar()->showMessage(image_name);
     }
 }
 
@@ -93,7 +95,9 @@ void MainWindow::save()
         else
         {
             ui->progressBar->setValue(ui->progressBar->value() + 1);
-            mImageView->loadImage(mImageDir.filePath(mImageNames.top()));
+            QString image_name = mImageNames.top();
+            mImageView->loadImage(mImageDir.filePath(image_name));
+            statusBar()->showMessage(image_name);
         }
     };
 
