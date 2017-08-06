@@ -149,6 +149,7 @@ void MainWindow::loadImageDir()
         ui->imageView->loadImage(nextImagePath);
         ui->progressBar->setRange(0, annotationData.getNumberOfAllImages());
         ui->progressBar->setValue(annotationData.getNumberOfAnnotatedImages());
+        statusBar()->showMessage(nextImageName);
     }
 }
 
@@ -181,6 +182,7 @@ void MainWindow::next()
 
             ui->progressBar->setValue(ui->progressBar->value() + 1);
             ui->imageView->loadImage(nextImagePath);
+            statusBar()->showMessage(nextImageName);
         }
     };
 
