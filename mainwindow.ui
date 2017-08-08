@@ -26,7 +26,15 @@
      </widget>
     </item>
     <item>
-     <layout class="QGridLayout" name="labelsLayout"/>
+     <widget class="QWidget" name="labelsWidget" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <layout class="QGridLayout" name="labelsLayout"/>
+     </widget>
     </item>
     <item>
      <widget class="ImageView" name="imageView">
