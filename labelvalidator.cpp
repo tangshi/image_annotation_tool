@@ -1,5 +1,6 @@
 #include "labelvalidator.h"
 #include <QStringList>
+#include "labels.h"
 
 
 QValidator::State LabelValidator::validate(QString &input, int &) const
@@ -10,10 +11,8 @@ QValidator::State LabelValidator::validate(QString &input, int &) const
     }
     else if (input.size() == 1)
     {
-        const static QStringList kLabels {
-            "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
-            "S", "H", "Y", "C"
-        };
+        const QStringList &kLabels = GetAnnotationLabels();
+
         input = input.toUpper();
         if (kLabels.contains(input))
         {

@@ -27,15 +27,23 @@ SOURCES += main.cpp\
     imageview.cpp \
     previewimageview.cpp \
     annotationdata.cpp \
-    labelvalidator.cpp
+    labelvalidator.cpp \
+    labels.cpp
 
 HEADERS  += mainwindow.h \
     imageview.h \
     previewimageview.h \
     annotationdata.h \
-    labelvalidator.h
+    labelvalidator.h \
+    labels.h
 
 FORMS    += mainwindow.ui
 
 RESOURCES += resource.qrc
+
+copydata.commands = cp $$PWD/labels.txt $$OUT_PWD
+first.depends = $(first) copydata
+export(first.depends)
+export(copydata.commands)
+QMAKE_EXTRA_TARGETS += first copydata
 

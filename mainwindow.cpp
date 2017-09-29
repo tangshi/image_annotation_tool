@@ -3,6 +3,7 @@
 #include "imageview.h"
 #include "previewimageview.h"
 #include "labelvalidator.h"
+#include "labels.h"
 #include <QFileDialog>
 #include <QFile>
 #include <QDir>
@@ -74,10 +75,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->imageView, &ImageView::mouseReleased, this, [this]()
     {
-        const static QStringList kLabels {
-            "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
-            "S", "H", "Y", "C"
-        };
+        const QStringList &kLabels = GetAnnotationLabels();
 
         bool ok;
         QString label = QInputDialog::getItem(this, QStringLiteral("标注"), QStringLiteral("请选择对应标注："), kLabels, 0, false, &ok);
